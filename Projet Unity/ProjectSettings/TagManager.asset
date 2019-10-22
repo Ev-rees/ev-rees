@@ -7,6 +7,9 @@ TagManager:
   - player
   - camera
   - obstacleNormal
+  - power
+  - obstacleSpecial
+  - player2
   layers:
   - Default
   - TransparentFX
