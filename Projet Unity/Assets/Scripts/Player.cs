@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using System.Runtime.Serialization;
 
 public class Player : MonoBehaviour
 {
     public Rigidbody rb;
 
-    private float speedZ = 300.0f;
+    private float speedZ = 450.0f;
 
     void Start()
     {

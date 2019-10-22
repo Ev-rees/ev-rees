@@ -6,14 +6,14 @@ public class TileManager : MonoBehaviour
 {
 
     public GameObject[] tilePrefabs;
+    public float spawnZ = -15.0f;
+    public float tileLength = 15.0f;
+    public int amountTilesOnScreen = 10;
+    public List<GameObject> activeTiles;
+    public float safeZone = 20.0f;
+
     private Transform player;
-    private float spawnZ = -15.0f;
-    private float tileLength = 15.0f;
-    private float safeZone = 20.0f;
 
-    private int amountTilesOnScreen = 5;
-
-    private List<GameObject> activeTiles;
 
 
     // Start is called before the first frame update
@@ -43,8 +43,6 @@ public class TileManager : MonoBehaviour
         GameObject go;
         go = Instantiate(tilePrefabs[0]) as GameObject;
         go.transform.SetParent(transform);
-
-        Debug.Log(Vector3.forward);
 
         go.transform.position = Vector3.forward * spawnZ;
         spawnZ += tileLength;
