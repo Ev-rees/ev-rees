@@ -20,8 +20,8 @@ public class PortalActivation : MonoBehaviour
     {
         if (Input.GetKeyDown("a") && Input.GetKeyDown("s"))
         {
-            player1.transform.position = new Vector3(posPlayer2, player1.transform.position.y, player1.transform.position.z);
-            player2.transform.position = new Vector3(posPlayer1, player2.transform.position.y, player2.transform.position.z);
+            player1.transform.position = new Vector3(posPlayer2, player1.transform.position.y, player2.transform.position.z);
+            player2.transform.position = new Vector3(posPlayer1, player2.transform.position.y, player1.transform.position.z);
         }
 
         if (Input.GetKeyUp("a") && Input.GetKeyUp("s"))

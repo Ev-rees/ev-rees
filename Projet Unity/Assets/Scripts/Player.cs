@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
 
     public LayerMask groundLayers;
     public float speedZ = 450.0f;
-    public float jumpForce = 7f;
+    public float jumpForce = 3f;
     public float distToGround = 0.5f;
 
     public Wiimote remote;
@@ -33,9 +33,8 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, speedZ * Time.deltaTime);
-
-        //if(IsGrounded() && Input.GetKeyUp("space") && Input.GetKeyUp("up"))
-        if (IsGrounded() && Input.GetKeyDown("space"))
+         
+        if (IsGrounded() && Input.GetKeyUp("space") && Input.GetKeyUp("up"))
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
