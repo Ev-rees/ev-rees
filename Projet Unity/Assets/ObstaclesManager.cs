@@ -5,28 +5,29 @@ using System.Collections.Generic;
 public class ObstaclesManager : MonoBehaviour
 {
     public GameObject[] obstaclesPrefabs;
+    public TileManager tileManager;
 
     private Transform player;
     private int amountObstaclesOnScreen = 4;
     private float distanceMinBetween = 15.0f;
+    private float posY;
 
 
     private List<GameObject> activeObstacles;
-    public TileManager tileManager;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         activeObstacles = new List<GameObject>();
 
         player = GameObject.FindGameObjectWithTag("player").transform;
+        posY = player.position.y;
 
         SpawnObstacle();
         StartCoroutine(AddNewObstacle());
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (activeObstacles.Count > 0 && activeObstacles[0].transform.position.z < player.position.z - 5.0f)
@@ -57,7 +58,7 @@ public class ObstaclesManager : MonoBehaviour
                 }
             }
 
-            float randTime = Random.Range(1.2f, 5f);
+            float randTime = Random.Range(0.5f, 5f);
 
             yield return new WaitForSeconds(randTime);
         }
@@ -76,11 +77,11 @@ public class ObstaclesManager : MonoBehaviour
 
         if (activeObstacles.Count > 0)
         {
-            go.transform.position = new Vector3(0, player.position.y, activeObstacles[activeObstacles.Count - 1].transform.position.z + randDistance);
+            go.transform.position = new Vector3(0, posY, activeObstacles[activeObstacles.Count - 1].transform.position.z + randDistance);
         }
         else
         {
-            go.transform.position = new Vector3(0, player.position.y, player.position.z + randDistance);
+            go.transform.position = new Vector3(0, posY, player.position.z + randDistance);
         }
     
 

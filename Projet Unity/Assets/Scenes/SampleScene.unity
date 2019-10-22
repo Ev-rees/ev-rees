@@ -304,6 +304,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 442987736}
+  col: {fileID: 442987732}
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  speedZ: 450
+  jumpForce: 7
+  distToGround: 0.5
 --- !u!114 &442987738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,10 +320,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 442987731}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 898d319a540285c4c8e16ec376e3c894, type: 3}
+  m_Script: {fileID: 11500000, guid: 842823c789652dc4f85af1a2280f1a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {fileID: 442987737}
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,6 +451,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefabs:
   - {fileID: 4267810614728770457, guid: d11df418ce308a149ab42880457baf84, type: 3}
+  spawnZ: -15
+  tileLength: 15
+  amountTilesOnScreen: 10
+  activeTiles: []
+  safeZone: 20
 --- !u!4 &1008089590
 Transform:
   m_ObjectHideFlags: 0
@@ -485,13 +496,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1515576190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 057f63be618319e47b58e364faac0af8, type: 3}
+  m_Script: {fileID: 11500000, guid: a45caa4fcb3e834439a903d7dff7cbd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   obstaclesPrefabs:
   - {fileID: 932983636280115307, guid: 37d9153b6b37fcf49894f932617757da, type: 3}
   - {fileID: 568511815276157989, guid: ee7f455ad3962254f8cd7bf58609fe17, type: 3}
   - {fileID: 8274939741781406813, guid: 0a556cdd0f360fc47bc226dcbf64a5d1, type: 3}
+  tileManager: {fileID: 1008089589}
 --- !u!4 &1515576192
 Transform:
   m_ObjectHideFlags: 0
