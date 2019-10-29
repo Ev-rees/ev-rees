@@ -388,7 +388,6 @@ GameObject:
   - component: {fileID: 442987732}
   - component: {fileID: 442987736}
   - component: {fileID: 442987737}
-  - component: {fileID: 442987738}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: player
@@ -462,7 +461,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 442987731}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.78, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -498,25 +497,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 442987736}
   col: {fileID: 442987732}
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 1
   speedZ: 450
   jumpForce: 7
-  distToGround: 0.5
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 512
   power: {fileID: 9202894889362994449, guid: 08a4311f79bbf5645b39395deb41c578, type: 3}
---- !u!114 &442987738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 442987731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 842823c789652dc4f85af1a2280f1a81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &504919494
 GameObject:
   m_ObjectHideFlags: 0

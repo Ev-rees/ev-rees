@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -14,22 +15,23 @@ public class Player : MonoBehaviour
     // Variable BoxCollider faisant référence au component du joueur (affecté dans Unity)
     public BoxCollider col;
 
-    // ??? Me souvient plus, je dois retrouver le tuto
-    public LayerMask groundLayers;
-
     // Vitesse du joueur
     public float speedZ = 450.0f;
 
     // Force du saut
-    public float jumpForce = 3f;
+    public float jumpForce = 7f;
 
-    // Distance entre le joueur et le sol
-    public float distToGround = 0.5f;
+    public LayerMask groundLayers;
+
+    private bool canJump = true;
+
+    // Évènement sur les touches du clavier
+    private UnityEvent keyUpEvent = new UnityEvent();
 
     /*---------------------------------------------------------- */
 
     // Variable contenant la remote
-    private Wiimote remote;
+    //private Wiimote remote;
     // Variable du délai entre les lancés
     private float timeBetweenShots = 1f;
     // Variable du timestamp
@@ -43,26 +45,25 @@ public class Player : MonoBehaviour
         // On empêche le joueur via le rigidbody de faire des rotation
         rb.freezeRotation = true;
 
+        // On ajoute un écouteur sur l'évènement
+        keyUpEvent.AddListener(jumpEvent);
+
         // Initialisation des wii remote
-        InitWiimotes();
+        //InitWiimotes();
     }
 
     void FixedUpdate()
     {
         // Fait avancer le personnage
         rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, speedZ * Time.deltaTime);
-         
-        //if (IsGrounded() && Input.GetKeyUp("space") && Input.GetKeyUp("up"))
-        // Potentiellement à changer selon le prof
-        // Lorsqu'on saute
-        if (IsGrounded() && Input.GetKeyDown("space"))
+
+        if (Input.GetKeyUp("space") && keyUpEvent != null)
         {
-            // On ajoute de la force pour faire sauter le personnage
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            keyUpEvent.Invoke();
         }
 
         // Variable pour contenir le data de la remote
-        int data;
+        /* int data;
         // Tant qu'il y a des données à lire
         do
         {
@@ -85,18 +86,30 @@ public class Player : MonoBehaviour
                 timestamp = Time.time + timeBetweenShots;
             }
 
-        } while (data > 0);
+        } while (data > 0);*/
     }
 
-    // Vérifie si le joueur est proche ou au sol
-    public bool IsGrounded()
-    {
-        return Physics.Raycast(transform.position, Vector3.down, distToGround);
+
+    // POUR LE JUMP
+    // Arrêter déplacement quand on fait la collision
+    // Repartir le déplacement quand on jump
+    // Faire glisser le player vers le sol
+    // Bounce (?)
+    private void jumpEvent() {
+        if (IsGrounded()) {
+            Debug.Log("Je saute");
+
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
     }
 
+    private bool IsGrounded() {
+        return Physics.CheckCapsule(col.bounds.center, new Vector3(col.bounds.center.x,
+        col.bounds.min.y, col.bounds.center.z), col.size.z * .9f, groundLayers);
+    }
 
     // Initialise les wii remotes
-    private void InitWiimotes()
+    /* private void InitWiimotes()
     {
         // Trouve les wiimotes connectées
         WiimoteManager.FindWiimotes();
@@ -114,7 +127,7 @@ public class Player : MonoBehaviour
             remote.SetupIRCamera(IRDataType.EXTENDED);
 
         }
-    }
+    }*/
 
     // Clean les wii remotes de l'application
     // À appeler à la fin du jeu
