@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class ObstaclesManager : MonoBehaviour
 {
     // Tableau contenant les prefabs des obstacles
-    public GameObject[] obstaclesPrefabs;
+    /* public GameObject[] obstaclesPrefabs;
 
     // Liste faisant référence au TileManager (affecté dans Unity)
     public TileManager tileManager;
@@ -129,5 +129,5 @@ public class ObstaclesManager : MonoBehaviour
     {
         Destroy(activeObstacles[0]);
         activeObstacles.RemoveAt(0);
-    }
+    }*/
 }

@@ -17,8 +17,6 @@ public class TileManagerP2 : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        Debug.Log(transform.position.x);
-
         activeTiles = new List<GameObject>();
         player2 = GameObject.FindGameObjectWithTag("player2").transform;
 

@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
     // Booléen qui détermine si on est en collision ou non
     private bool isHavingCollision = false;
 
+    private GameObject currentObstacle;
+
     // Force du saut
     public float jumpForce = 10f;
 
@@ -40,9 +42,9 @@ public class Player : MonoBehaviour
     // Variable contenant la remote
     //private Wiimote remote;
     // Variable du délai entre les lancés
-    private float timeBetweenShots = 1f;
+    //private float timeBetweenShots = 1f;
     // Variable du timestamp
-    float timestamp;
+    //float timestamp;
 
     // Variable contenant le projectile
     public GameObject power;
@@ -59,24 +61,24 @@ public class Player : MonoBehaviour
         //InitWiimotes();
     }
 
-    void Update()
+    private void FixedUpdate()
     {
+        if (isHavingCollision) {
+            float posYPlayer = transform.position.y - (col.bounds.size.y / 2);
+            float posYObstacle = currentObstacle.transform.position.y + (currentObstacle.GetComponent<BoxCollider>().bounds.size.y / 2);
 
-        if (!IsGrounded())
-        {
-            // Simule une augmentation de gravité pour rendre le saut plus rapide
-            rb.AddForce(Vector3.down * (jumpForce * 2f));
+            if (posYPlayer >= posYObstacle) {
+
+                canMove = true;
+                isHavingCollision = false;
+            }
         }
-      
+
+
         // Si le personnage peut bouger et qu'il n'est pas en collision, il peut avancer
-        if (canMove && isHavingCollision != true)
+        if (canMove && isHavingCollision == false)
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, speedZ * Time.deltaTime);
-        }
-
-        if (Input.GetKeyUp("z") && Input.GetKeyUp("x") && keyUpEvent != null && IsGrounded())
-        {
-            keyUpEvent.Invoke();
         }
 
         // Variable pour contenir le data de la remote
@@ -106,12 +108,22 @@ public class Player : MonoBehaviour
         } while (data > 0);*/
     }
 
+    private void Update() {
+        if (!IsGrounded())
+        {
+            // Simule une augmentation de gravité pour rendre le saut plus rapide
+            rb.AddForce(Vector3.down * (jumpForce * 2f));
+        }
+
+        if (Input.GetKeyUp("z") && Input.GetKeyUp("x") && keyUpEvent != null && IsGrounded())
+        {
+            keyUpEvent.Invoke();
+        }
+    }
 
     // POUR LE JUMP
     private void jumpEvent() {
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
-        Debug.Log("Jump!");
     }
 
     // Vérifie si on est proche du sol ou non
@@ -127,20 +139,9 @@ public class Player : MonoBehaviour
         //(transform.position.y - (col.bounds.size.y / 2)) < (leCol.gameObject.transform.position.y + (leCol.gameObject.GetComponent<BoxCollider>().bounds.size.y / 2))
         if (leCol.gameObject.tag == "obstacleSpecial" || leCol.gameObject.tag == "obstacleNormal")
         {
-            /*float posYPlayer = transform.position.y - (col.bounds.size.y / 2);
-            float posYObstacle = leCol.gameObject.transform.position.y + (leCol.gameObject.GetComponent<BoxCollider>().bounds.size.y / 2);
-
-            Debug.Log(posYPlayer);
-            Debug.Log(posYObstacle);
-
-            /*Debug.Log(posYPlayer);
-            Debug.Log(posYObstacle);*/
-
-            /*if (posYPlayer < posYObstacle)
-            {*/
-                canMove = false;
-                isHavingCollision = true;
-            //}
+            canMove = false;
+            isHavingCollision = true;
+            currentObstacle = leCol.gameObject;
         }
     }
 
@@ -177,17 +178,17 @@ public class Player : MonoBehaviour
 
     // Clean les wii remotes de l'application
     // À appeler à la fin du jeu
-    void FinishedWithWiimotes()
+    /* void FinishedWithWiimotes()
     {
         // Parcoure toutes les wii remotes
         foreach (Wiimote remote in WiimoteManager.Wiimotes)
         {
             WiimoteManager.Cleanup(remote);
         }
-    }
+    }*/
 
     // Lance le pouvoir du joueur
-    private void ThrowPower () {
+    /* private void ThrowPower () {
         // On instantie le pouvoir
         GameObject powerMove = Instantiate(power) as GameObject;
 
@@ -203,5 +204,5 @@ public class Player : MonoBehaviour
 
         // On détruit le pouvoir après une seconde
         Destroy(powerMove, 1f);
-    }
+    }*/
 }
