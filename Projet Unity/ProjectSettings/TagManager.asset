@@ -10,6 +10,7 @@ TagManager:
   - power
   - obstacleSpecial
   - player2
+  - floor
   layers:
   - Default
   - TransparentFX

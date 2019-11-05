@@ -756,8 +756,6 @@ MonoBehaviour:
   - {fileID: 932983636280115307, guid: 37d9153b6b37fcf49894f932617757da, type: 3}
   - {fileID: 568511815276157989, guid: ee7f455ad3962254f8cd7bf58609fe17, type: 3}
   - {fileID: 8274939741781406813, guid: 0a556cdd0f360fc47bc226dcbf64a5d1, type: 3}
-  - {fileID: 7990599972709492675, guid: bfdf3e064233e0d4f8f45ad98fb7fbc6, type: 3}
-  - {fileID: 7511934238586238475, guid: 600ac7b9a05192f48b4b50371e3fc8e0, type: 3}
   tileManager: {fileID: 1008089589}
 --- !u!4 &1515576192
 Transform:

@@ -18,12 +18,19 @@ public class Player : MonoBehaviour
     // Vitesse du joueur
     public float speedZ = 450.0f;
 
+    // Booléen qui détermine si on peut bouger ou non
+    private bool canMove = true;
+
+    // Booléen qui détermine si on est en collision ou non
+    private bool isHavingCollision = false;
+
     // Force du saut
-    public float jumpForce = 7f;
+    public float jumpForce = 10f;
 
+    private float fallMultiplier = 2.5f;
+
+    // Variable pour déterminer si on touche au sol ou non
     public LayerMask groundLayers;
-
-    private bool canJump = true;
 
     // Évènement sur les touches du clavier
     private UnityEvent keyUpEvent = new UnityEvent();
@@ -52,12 +59,22 @@ public class Player : MonoBehaviour
         //InitWiimotes();
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        // Fait avancer le personnage
-        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, speedZ * Time.deltaTime);
 
-        if (Input.GetKeyUp("space") && keyUpEvent != null)
+        if (!IsGrounded())
+        {
+            // Simule une augmentation de gravité pour rendre le saut plus rapide
+            rb.AddForce(Vector3.down * (jumpForce * 2f));
+        }
+      
+        // Si le personnage peut bouger et qu'il n'est pas en collision, il peut avancer
+        if (canMove && isHavingCollision != true)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, speedZ * Time.deltaTime);
+        }
+
+        if (Input.GetKeyUp("z") && Input.GetKeyUp("x") && keyUpEvent != null && IsGrounded())
         {
             keyUpEvent.Invoke();
         }
@@ -80,7 +97,7 @@ public class Player : MonoBehaviour
             if (accel_result > 2 && Time.time >= timestamp)
             {
                 // On lance le pouvoir
-                throwPower();
+                ThrowPower();
 
                 // Update du temps
                 timestamp = Time.time + timeBetweenShots;
@@ -91,21 +108,37 @@ public class Player : MonoBehaviour
 
 
     // POUR LE JUMP
-    // Arrêter déplacement quand on fait la collision
-    // Repartir le déplacement quand on jump
-    // Faire glisser le player vers le sol
-    // Bounce (?)
     private void jumpEvent() {
-        if (IsGrounded()) {
-            Debug.Log("Je saute");
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
 
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
+        Debug.Log("Jump!");
     }
 
+    // Vérifie si on est proche du sol ou non
     private bool IsGrounded() {
         return Physics.CheckCapsule(col.bounds.center, new Vector3(col.bounds.center.x,
         col.bounds.min.y, col.bounds.center.z), col.size.z * .9f, groundLayers);
+    }
+
+
+    // Détecte quand on entre en collision avec un obstacle
+    private void OnCollisionEnter(Collision col)
+    {
+        if(col.gameObject.tag == "obstacleSpecial" || col.gameObject.tag == "obstacleNormal")
+        {
+            canMove = false;
+            isHavingCollision = true;
+        }
+    }
+
+    // Détecte quand on quitte une collision avec un obstacle
+    private void OnCollisionExit(Collision col)
+    {
+        if (col.gameObject.tag == "obstacleSpecial" || col.gameObject.tag == "obstacleNormal")
+        {
+            canMove = true;
+            isHavingCollision = false;
+        }
     }
 
     // Initialise les wii remotes
@@ -141,7 +174,7 @@ public class Player : MonoBehaviour
     }
 
     // Lance le pouvoir du joueur
-    private void throwPower () {
+    private void ThrowPower () {
         // On instantie le pouvoir
         GameObject powerMove = Instantiate(power) as GameObject;
 
