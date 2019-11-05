@@ -122,19 +122,32 @@ public class Player : MonoBehaviour
 
 
     // Détecte quand on entre en collision avec un obstacle
-    private void OnCollisionEnter(Collision col)
+    private void OnCollisionEnter(Collision leCol)
     {
-        if(col.gameObject.tag == "obstacleSpecial" || col.gameObject.tag == "obstacleNormal")
+        //(transform.position.y - (col.bounds.size.y / 2)) < (leCol.gameObject.transform.position.y + (leCol.gameObject.GetComponent<BoxCollider>().bounds.size.y / 2))
+        if (leCol.gameObject.tag == "obstacleSpecial" || leCol.gameObject.tag == "obstacleNormal")
         {
-            canMove = false;
-            isHavingCollision = true;
+            /*float posYPlayer = transform.position.y - (col.bounds.size.y / 2);
+            float posYObstacle = leCol.gameObject.transform.position.y + (leCol.gameObject.GetComponent<BoxCollider>().bounds.size.y / 2);
+
+            Debug.Log(posYPlayer);
+            Debug.Log(posYObstacle);
+
+            /*Debug.Log(posYPlayer);
+            Debug.Log(posYObstacle);*/
+
+            /*if (posYPlayer < posYObstacle)
+            {*/
+                canMove = false;
+                isHavingCollision = true;
+            //}
         }
     }
 
     // Détecte quand on quitte une collision avec un obstacle
-    private void OnCollisionExit(Collision col)
+    private void OnCollisionExit(Collision leCol)
     {
-        if (col.gameObject.tag == "obstacleSpecial" || col.gameObject.tag == "obstacleNormal")
+        if (leCol.gameObject.tag == "obstacleSpecial" || leCol.gameObject.tag == "obstacleNormal")
         {
             canMove = true;
             isHavingCollision = false;
