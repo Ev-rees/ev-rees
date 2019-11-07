@@ -41,7 +41,7 @@ public class ObstaclesManager : MonoBehaviour
     private void Update()
     {
         // Si on a au moins un obstacle de présent et qu'il est rendu derrière le joueur
-        if (activeObstacles.Count > 0 && activeObstacles[0].transform.position.z < player.position.z - 5.0f)
+        if (activeObstacles.Count > 0 && activeObstacles[0].transform.position.z < player.transform.position.z - 5.0f)
         {
             // On supprime l'obstacle
             DeleteObstacle();
@@ -51,7 +51,7 @@ public class ObstaclesManager : MonoBehaviour
     // Ajoute un obstacle à un temps random
     private IEnumerator AddNewObstacle()
     {
-        // À changer éventuellement quand on perd ou gache, car true le fait à l'infini
+        // À changer éventuellement quand on perd ou gagne, car true le fait à l'infini
         while (true)
         {
             // Si on a moins de 4 et plus de 0 obstacles présents ET il y a plus que 0 tuiles
@@ -104,13 +104,13 @@ public class ObstaclesManager : MonoBehaviour
         // Si on a au moins un obstacle présent, on l'ajoute après le dernier obstacle ajouté
         if (activeObstacles.Count > 0)
         {
-            obstacle.transform.position = new Vector3(0, 0.5f, activeObstacles[activeObstacles.Count - 1].transform.position.z + randDistance);
+            obstacle.transform.position = new Vector3(player.transform.position.x, 0.5f, activeObstacles[activeObstacles.Count - 1].transform.position.z + randDistance);
         }
 
         // On en  ajoute un après la position du joueur
         else
         {
-            obstacle.transform.position = new Vector3(0, player.transform.position.y, player.position.z + randDistance);
+            obstacle.transform.position = new Vector3(player.transform.position.x, 0.5f, player.transform.position.z + randDistance);
         }
 
         // Ajout de l'obstacle au jeu

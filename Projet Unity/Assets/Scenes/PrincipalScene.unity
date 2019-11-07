@@ -694,6 +694,7 @@ MonoBehaviour:
   - {fileID: 568511815276157989, guid: ee7f455ad3962254f8cd7bf58609fe17, type: 3}
   - {fileID: 8274939741781406813, guid: 0a556cdd0f360fc47bc226dcbf64a5d1, type: 3}
   tileManager: {fileID: 927322076}
+  player: {fileID: 130481438}
 --- !u!4 &696204483
 Transform:
   m_ObjectHideFlags: 0
@@ -844,6 +845,7 @@ MonoBehaviour:
   - {fileID: 568511815276157989, guid: ee7f455ad3962254f8cd7bf58609fe17, type: 3}
   - {fileID: 8274939741781406813, guid: 0a556cdd0f360fc47bc226dcbf64a5d1, type: 3}
   tileManager: {fileID: 1008089589}
+  player: {fileID: 442987731}
 --- !u!4 &1515576192
 Transform:
   m_ObjectHideFlags: 0
