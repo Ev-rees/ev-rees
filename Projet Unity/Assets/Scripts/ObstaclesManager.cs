@@ -7,14 +7,13 @@ using System.Collections.Generic;
 public class ObstaclesManager : MonoBehaviour
 {
     // Tableau contenant les prefabs des obstacles
-    /* public GameObject[] obstaclesPrefabs;
+    public GameObject[] obstaclesPrefabs;
 
     // Liste faisant référence au TileManager (affecté dans Unity)
     public TileManager tileManager;
 
-
     // Référence au joueur (affecté dans unity)
-    private Transform player;
+    public GameObject player;
 
     // Nombre d'obstacles visibles à la fois
     private int amountObstaclesOnScreen = 4;
@@ -31,14 +30,10 @@ public class ObstaclesManager : MonoBehaviour
         // Création de la liste
         activeObstacles = new List<GameObject>();
 
-        // Va chercher l'objet transform du joueur et garde la position Y en mémoire
-        player = GameObject.FindGameObjectWithTag("player").transform;
-
         // Affichage d'un obstacle
         SpawnObstacle();
 
         // Lancement de la coroutine pour les obstacles
-        // Une coroutine est comme un setTimeout (Pour Nadia)
         StartCoroutine(AddNewObstacle());
     }
 
@@ -76,8 +71,7 @@ public class ObstaclesManager : MonoBehaviour
                 randDistance += distanceMinBetween;
 
                 // Si la position du dernier obstacle + la distance random est plus petit que la position de la dernière tuile apparue
-                if ((activeObstacles[activeObstacles.Count - 1].transform.position.z + randDistance) < 
-                tileManager.activeTiles[tileManager.activeTiles.Count - 1].transform.position.z)
+                if ((activeObstacles[activeObstacles.Count - 1].transform.position.z + randDistance) < tileManager.activeTiles[tileManager.activeTiles.Count - 1].transform.position.z)
                 {
                     // Alors on peut ajouter un obstacle
                     SpawnObstacle(randDistance);
@@ -110,15 +104,15 @@ public class ObstaclesManager : MonoBehaviour
         // Si on a au moins un obstacle présent, on l'ajoute après le dernier obstacle ajouté
         if (activeObstacles.Count > 0)
         {
-            obstacle.transform.position = new Vector3(0, player.transform.position.y, activeObstacles[activeObstacles.Count - 1].transform.position.z + randDistance);
+            obstacle.transform.position = new Vector3(0, 0.5f, activeObstacles[activeObstacles.Count - 1].transform.position.z + randDistance);
         }
-        
+
         // On en  ajoute un après la position du joueur
         else
         {
             obstacle.transform.position = new Vector3(0, player.transform.position.y, player.position.z + randDistance);
         }
-    
+
         // Ajout de l'obstacle au jeu
         activeObstacles.Add(obstacle);
     }
@@ -129,5 +123,5 @@ public class ObstaclesManager : MonoBehaviour
     {
         Destroy(activeObstacles[0]);
         activeObstacles.RemoveAt(0);
-    }*/
+    }
 }

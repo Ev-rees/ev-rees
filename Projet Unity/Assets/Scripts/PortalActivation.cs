@@ -7,7 +7,7 @@ using UnityEngine;
 public class PortalActivation : MonoBehaviour
 {
     // Variables contenant les joueurs (affectés dans Unity)
-    public GameObject player1;
+    /* public GameObject player1;
     public GameObject player2;
 
     // Positions de départ en x des joueurs
@@ -77,5 +77,5 @@ public class PortalActivation : MonoBehaviour
     public void Close()
     {
         stream.Close();
-    }
+    }*/
 }

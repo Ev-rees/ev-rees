@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,9 +6,11 @@ using System.Threading;
 using WiimoteApi;
 using WiimoteApi.Internal;
 
-// Script relié à Player1
 public class Player : MonoBehaviour
 {
+    // Variable déterminant à quel joueur on fait référence
+    public int whichPlayer;
+
     // Variable Rigidbody faisant référence au component du joueur (affecté dans Unity)
     public Rigidbody rb;
 
@@ -19,12 +21,12 @@ public class Player : MonoBehaviour
     public float speedZ = 450.0f;
 
     // Booléen qui détermine si on peut bouger ou non
-    private bool canMove = true;
+    public bool canMove = true;
 
     // Booléen qui détermine si on est en collision ou non
-    private bool isHavingCollision = false;
+    public bool isHavingCollision = false;
 
-    private GameObject currentObstacle;
+    public GameObject currentObstacle;
 
     // Force du saut
     public float jumpForce = 10f;
@@ -49,7 +51,7 @@ public class Player : MonoBehaviour
     // Variable contenant le projectile
     public GameObject power;
 
-    void Start()
+    private void Start()
     {
         // On empêche le joueur via le rigidbody de faire des rotation
         rb.freezeRotation = true;
@@ -63,7 +65,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isHavingCollision) {
+        if (isHavingCollision && currentObstacle != null) {
             float posYPlayer = transform.position.y - (col.bounds.size.y / 2);
             float posYObstacle = currentObstacle.transform.position.y + (currentObstacle.GetComponent<BoxCollider>().bounds.size.y / 2);
 
@@ -115,9 +117,18 @@ public class Player : MonoBehaviour
             rb.AddForce(Vector3.down * (jumpForce * 2f));
         }
 
-        if (Input.GetKeyUp("z") && Input.GetKeyUp("x") && keyUpEvent != null && IsGrounded())
-        {
-            keyUpEvent.Invoke();
+        if (whichPlayer == 1) {
+            if (Input.GetKeyUp("z") && Input.GetKeyUp("x") && keyUpEvent != null && IsGrounded())
+            {
+                keyUpEvent.Invoke();
+            }
+        }
+
+        if (whichPlayer == 2) {
+            if (Input.GetKeyUp("q") && Input.GetKeyUp("w") && keyUpEvent != null && IsGrounded())
+            {
+                keyUpEvent.Invoke();
+            }
         }
     }
 
@@ -136,7 +147,6 @@ public class Player : MonoBehaviour
     // Détecte quand on entre en collision avec un obstacle
     private void OnCollisionEnter(Collision leCol)
     {
-        //(transform.position.y - (col.bounds.size.y / 2)) < (leCol.gameObject.transform.position.y + (leCol.gameObject.GetComponent<BoxCollider>().bounds.size.y / 2))
         if (leCol.gameObject.tag == "obstacleSpecial" || leCol.gameObject.tag == "obstacleNormal")
         {
             canMove = false;

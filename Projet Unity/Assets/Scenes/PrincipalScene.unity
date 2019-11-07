@@ -153,7 +153,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &130481438
 GameObject:
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 130481443}
   - component: {fileID: 130481442}
   - component: {fileID: 130481441}
-  - component: {fileID: 130481440}
+  - component: {fileID: 130481439}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: player2
@@ -176,7 +176,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &130481440
+--- !u!114 &130481439
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,17 +185,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 130481438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a906d9f5347858048a56ca2bdd22aef1, type: 3}
+  m_Script: {fileID: 11500000, guid: f94fae14f983a0b449d8d57df79a01fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  col: {fileID: 0}
+  whichPlayer: 2
+  rb: {fileID: 130481441}
+  col: {fileID: 130481442}
+  speedZ: 450
+  canMove: 1
+  isHavingCollision: 0
+  currentObstacle: {fileID: 0}
+  jumpForce: 10
   groundLayers:
     serializedVersion: 2
-    m_Bits: 0
-  speedZ: 450
-  jumpForce: 7
-  distToGround: 0.5
+    m_Bits: 512
   power: {fileID: 0}
 --- !u!54 &130481441
 Rigidbody:
@@ -279,7 +282,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 130481438}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.87, y: 0.78, z: 0}
+  m_LocalPosition: {x: 26.87, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -354,56 +357,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &376705364
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 376705366}
-  - component: {fileID: 376705365}
-  m_Layer: 0
-  m_Name: TileManager P2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &376705365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376705364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a02a6d91423fb7a46ba279e36598ee73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilePrefabs:
-  - {fileID: 4267810614728770457, guid: 791ea67977d5b244f87818cc767d39d0, type: 3}
-  spawnZ: -15
-  tileLength: 15
-  amountTilesOnScreen: 10
-  activeTiles: []
-  safeZone: 20
---- !u!4 &376705366
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376705364}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.87, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &442987731
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,14 +478,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f94fae14f983a0b449d8d57df79a01fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whichPlayer: 1
   rb: {fileID: 442987736}
   col: {fileID: 442987732}
   speedZ: 450
-  jumpForce: 7
+  canMove: 1
+  isHavingCollision: 0
+  currentObstacle: {fileID: 0}
+  jumpForce: 10
   groundLayers:
     serializedVersion: 2
     m_Bits: 512
-  power: {fileID: 9202894889362994449, guid: 08a4311f79bbf5645b39395deb41c578, type: 3}
+  power: {fileID: 0}
 --- !u!1 &504919494
 GameObject:
   m_ObjectHideFlags: 0
@@ -703,6 +660,105 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 442987735}
   offset: {x: 0, y: 1, z: -5}
+--- !u!1 &696204481
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 696204483}
+  - component: {fileID: 696204482}
+  m_Layer: 0
+  m_Name: ObstaclesManagerP2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &696204482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696204481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a45caa4fcb3e834439a903d7dff7cbd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstaclesPrefabs:
+  - {fileID: 932983636280115307, guid: 37d9153b6b37fcf49894f932617757da, type: 3}
+  - {fileID: 568511815276157989, guid: ee7f455ad3962254f8cd7bf58609fe17, type: 3}
+  - {fileID: 8274939741781406813, guid: 0a556cdd0f360fc47bc226dcbf64a5d1, type: 3}
+  tileManager: {fileID: 927322076}
+--- !u!4 &696204483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696204481}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 26.87, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &927322075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 927322077}
+  - component: {fileID: 927322076}
+  m_Layer: 0
+  m_Name: TileManagerP2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &927322076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927322075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f52f55006fe3e9489b189690760cbe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilePrefab: {fileID: 4267810614728770457, guid: 791ea67977d5b244f87818cc767d39d0,
+    type: 3}
+  player: {fileID: 130481438}
+  spawnZ: -15
+  tileLength: 15
+  amountTilesOnScreen: 10
+  activeTiles: []
+  safeZone: 20
+--- !u!4 &927322077
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927322075}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 26.87, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1008089588
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,7 +770,7 @@ GameObject:
   - component: {fileID: 1008089590}
   - component: {fileID: 1008089589}
   m_Layer: 0
-  m_Name: TileManager P1
+  m_Name: TileManagerP1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -732,8 +788,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f52f55006fe3e9489b189690760cbe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefabs:
-  - {fileID: 4267810614728770457, guid: d11df418ce308a149ab42880457baf84, type: 3}
+  tilePrefab: {fileID: 4267810614728770457, guid: d11df418ce308a149ab42880457baf84,
+    type: 3}
+  player: {fileID: 442987731}
   spawnZ: -15
   tileLength: 15
   amountTilesOnScreen: 10
@@ -764,7 +821,7 @@ GameObject:
   - component: {fileID: 1515576192}
   - component: {fileID: 1515576191}
   m_Layer: 0
-  m_Name: ObstaclesManager
+  m_Name: ObstaclesManagerP1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -782,6 +839,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a45caa4fcb3e834439a903d7dff7cbd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstaclesPrefabs:
+  - {fileID: 932983636280115307, guid: 37d9153b6b37fcf49894f932617757da, type: 3}
+  - {fileID: 568511815276157989, guid: ee7f455ad3962254f8cd7bf58609fe17, type: 3}
+  - {fileID: 8274939741781406813, guid: 0a556cdd0f360fc47bc226dcbf64a5d1, type: 3}
+  tileManager: {fileID: 1008089589}
 --- !u!4 &1515576192
 Transform:
   m_ObjectHideFlags: 0
@@ -839,5 +901,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
