@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     // Variable BoxCollider faisant référence au component du joueur (affecté dans Unity)
     public BoxCollider col;
 
+    public Animator playerAnim;
+
     // Vitesse du joueur
     public float speedZ = 450.0f;
 
@@ -135,6 +137,7 @@ public class Player : MonoBehaviour
     // POUR LE JUMP
     private void jumpEvent() {
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        playerAnim.SetTrigger("jump");
     }
 
     // Vérifie si on est proche du sol ou non
