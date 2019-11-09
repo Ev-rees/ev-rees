@@ -41,7 +41,7 @@ public class ObstaclesManager : MonoBehaviour
     private void Update()
     {
         // Si on a au moins un obstacle de présent et qu'il est rendu derrière le joueur
-        if (activeObstacles.Count > 0 && activeObstacles[0].transform.position.z < player.transform.position.z - 5.0f)
+        if (activeObstacles.Count > 0 && activeObstacles[0].transform.position.z < player.transform.position.z - (activeObstacles[0].GetComponent<BoxCollider>().bounds.size.z + 15))
         {
             // On supprime l'obstacle
             DeleteObstacle();

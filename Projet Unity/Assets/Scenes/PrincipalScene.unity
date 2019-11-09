@@ -913,9 +913,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstaclesPrefabs:
-  - {fileID: 932983636280115307, guid: 37d9153b6b37fcf49894f932617757da, type: 3}
-  - {fileID: 568511815276157989, guid: ee7f455ad3962254f8cd7bf58609fe17, type: 3}
-  - {fileID: 8274939741781406813, guid: 0a556cdd0f360fc47bc226dcbf64a5d1, type: 3}
+  - {fileID: 1898339767755762263, guid: f50e5eefc8d232742b57f4f9fa76fcd9, type: 3}
+  - {fileID: 7506687146479169950, guid: 4d5bd637c24e24c48983bcf3cd30be3f, type: 3}
   tileManager: {fileID: 927322076}
   player: {fileID: 1238218560}
 --- !u!4 &696204483
@@ -1079,8 +1078,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.9203868, z: 0.9572334}
-  m_Center: {x: 0, y: 0.75325215, z: 0.021383286}
+  m_Size: {x: 1, y: 1.9930401, z: 0.9572334}
+  m_Center: {x: 0, y: 0.68898237, z: 0.021383286}
 --- !u!54 &1114865122
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1095,7 +1094,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 2
   m_CollisionDetection: 0
 --- !u!114 &1114865123
 MonoBehaviour:
@@ -1117,7 +1116,7 @@ MonoBehaviour:
   canMove: 1
   isHavingCollision: 0
   currentObstacle: {fileID: 0}
-  jumpForce: 10
+  jumpForce: 12
   groundLayers:
     serializedVersion: 2
     m_Bits: 512
@@ -1199,7 +1198,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 2
   m_CollisionDetection: 0
 --- !u!4 &1238218564
 Transform:
@@ -1346,9 +1345,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstaclesPrefabs:
-  - {fileID: 932983636280115307, guid: 37d9153b6b37fcf49894f932617757da, type: 3}
-  - {fileID: 568511815276157989, guid: ee7f455ad3962254f8cd7bf58609fe17, type: 3}
-  - {fileID: 8274939741781406813, guid: 0a556cdd0f360fc47bc226dcbf64a5d1, type: 3}
+  - {fileID: 1898339767755762263, guid: f50e5eefc8d232742b57f4f9fa76fcd9, type: 3}
+  - {fileID: 7506687146479169950, guid: 4d5bd637c24e24c48983bcf3cd30be3f, type: 3}
   tileManager: {fileID: 1008089589}
   player: {fileID: 1114865119}
 --- !u!4 &1515576192

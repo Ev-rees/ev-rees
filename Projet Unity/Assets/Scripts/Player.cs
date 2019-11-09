@@ -69,7 +69,10 @@ public class Player : MonoBehaviour
     {
         if (isHavingCollision && currentObstacle != null) {
             float posYPlayer = transform.position.y - (col.bounds.size.y / 2);
-            float posYObstacle = currentObstacle.transform.position.y + (currentObstacle.GetComponent<BoxCollider>().bounds.size.y / 2);
+            float posYObstacle = 0.5f + currentObstacle.GetComponent<BoxCollider>().bounds.size.y;
+
+            Debug.Log("Player : " + posYPlayer);
+            Debug.Log("Obstacle : " + posYObstacle);
 
             if (posYPlayer >= posYObstacle) {
 
