@@ -8,7 +8,7 @@ public class Displays : MonoBehaviour
     void Start()
     {
         for(int i = 0; i < Display.displays.Length; i++) {
-            Display.displays[i].Activate(1021, 768, 60);
+            Display.displays[i].Activate(0, 0, 60);
         }
     }
 }

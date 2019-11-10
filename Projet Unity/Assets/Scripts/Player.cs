@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
 
     public Animator playerAnim;
 
+    private float posYInit;
+
     // Vitesse du joueur
     public float speedZ = 450.0f;
 
@@ -61,6 +63,8 @@ public class Player : MonoBehaviour
         // On ajoute un écouteur sur l'évènement
         keyUpEvent.AddListener(jumpEvent);
 
+        posYInit = 0.5575377f;
+
         // Initialisation des wii remote
         //InitWiimotes();
     }
@@ -68,8 +72,8 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         if (isHavingCollision && currentObstacle != null) {
-            float posYPlayer = transform.position.y - (col.bounds.size.y / 2);
-            float posYObstacle = 0.5f + currentObstacle.GetComponent<BoxCollider>().bounds.size.y;
+            float posYPlayer = transform.position.y - posYInit;
+            float posYObstacle = currentObstacle.GetComponent<BoxCollider>().bounds.size.y;
 
             Debug.Log("Player : " + posYPlayer);
             Debug.Log("Obstacle : " + posYObstacle);
@@ -78,6 +82,7 @@ public class Player : MonoBehaviour
 
                 canMove = true;
                 isHavingCollision = false;
+                playerAnim.SetBool("isIdle", false);
             }
         }
 
@@ -158,6 +163,8 @@ public class Player : MonoBehaviour
             canMove = false;
             isHavingCollision = true;
             currentObstacle = leCol.gameObject;
+
+            playerAnim.SetBool("isIdle", true);
         }
     }
 
@@ -168,6 +175,8 @@ public class Player : MonoBehaviour
         {
             canMove = true;
             isHavingCollision = false;
+
+            playerAnim.SetBool("isIdle", false);
         }
     }
 
