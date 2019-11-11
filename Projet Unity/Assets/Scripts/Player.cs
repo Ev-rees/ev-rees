@@ -1,7 +1,7 @@
-using UnityEngine;
-using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
 using System.Threading;
 using WiimoteApi;
 using WiimoteApi.Internal;
@@ -45,15 +45,22 @@ public class Player : MonoBehaviour
 
     /*---------------------------------------------------------- */
 
-    // Variable contenant la remote
-    //private Wiimote remote;
+    // Variable faisant référence au script des Wii remotes
+    public WiiRemotes scriptRemotes;
+
+    // Variable la wii remote du joueur
+    private Wiimote playerRemote;
+
     // Variable du délai entre les lancés
-    //private float timeBetweenShots = 1f;
+    private float timeBetweenShots = 1f;
+
     // Variable du timestamp
-    //float timestamp;
+    float timestamp;
 
     // Variable contenant le projectile
     public GameObject power;
+
+    /*---------------------------------------------------------- */
 
     private void Start()
     {
@@ -65,8 +72,25 @@ public class Player : MonoBehaviour
 
         posYInit = 0.5575377f;
 
-        // Initialisation des wii remote
-        //InitWiimotes();
+        if (scriptRemotes.wiiRemotes.Count <= 0)
+        {
+            scriptRemotes.InitWiimotes();
+        }
+
+        // Assignation des Wii Remotes aux joueurs
+        if (scriptRemotes.wiiRemotes.Count >= 2)
+        {
+                if (whichPlayer == 1)
+                {
+                    playerRemote = scriptRemotes.wiiRemotes[0];
+                    Debug.Log("Player 1 : " + playerRemote);
+                }
+                else if (whichPlayer == 2)
+                {
+                    playerRemote = scriptRemotes.wiiRemotes[1];
+                    Debug.Log("Player 2 : " + playerRemote);
+                }
+        }
     }
 
     private void FixedUpdate()
@@ -74,9 +98,6 @@ public class Player : MonoBehaviour
         if (isHavingCollision && currentObstacle != null) {
             float posYPlayer = transform.position.y - posYInit;
             float posYObstacle = currentObstacle.GetComponent<BoxCollider>().bounds.size.y;
-
-            Debug.Log("Player : " + posYPlayer);
-            Debug.Log("Obstacle : " + posYObstacle);
 
             if (posYPlayer >= posYObstacle) {
 
@@ -92,53 +113,35 @@ public class Player : MonoBehaviour
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, speedZ * Time.deltaTime);
         }
-
-        // Variable pour contenir le data de la remote
-        /* int data;
-        // Tant qu'il y a des données à lire
-        do
-        {
-            // Lire le data
-            data = remote.ReadWiimoteData();
-
-            // Aller chercher les données de l'accélération
-            float[] accel = remote.Accel.GetCalibratedAccelData();
-
-            // Prendre le résultat de l'accélération
-            float accel_result = accel[0];
-
-            // Si l'accélération est plus haut que 2 et qu'au moins une seconde s'est écoulée
-            if (accel_result > 2 && Time.time >= timestamp)
-            {
-                // On lance le pouvoir
-                ThrowPower();
-
-                // Update du temps
-                timestamp = Time.time + timeBetweenShots;
-            }
-
-        } while (data > 0);*/
     }
 
-    private void Update() {
+    private void Update()
+    {
         if (!IsGrounded())
         {
             // Simule une augmentation de gravité pour rendre le saut plus rapide
             rb.AddForce(Vector3.down * (jumpForce * 2f));
         }
 
-        if (whichPlayer == 1) {
+        if (whichPlayer == 1)
+        {
             if (Input.GetKeyUp("z") && Input.GetKeyUp("x") && keyUpEvent != null && IsGrounded())
             {
                 keyUpEvent.Invoke();
             }
         }
 
-        if (whichPlayer == 2) {
+        if (whichPlayer == 2)
+        {
             if (Input.GetKeyUp("q") && Input.GetKeyUp("w") && keyUpEvent != null && IsGrounded())
             {
                 keyUpEvent.Invoke();
             }
+        }
+
+        if (playerRemote != null)
+        {
+            readPlayerRemoteData();
         }
     }
 
@@ -166,6 +169,14 @@ public class Player : MonoBehaviour
 
             playerAnim.SetBool("isIdle", true);
         }
+
+        if (leCol.gameObject.tag == "missingTile")
+        {
+            canMove = false;
+            playerAnim.SetBool("isIdle", true);
+            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+
+        }
     }
 
     // Détecte quand on quitte une collision avec un obstacle
@@ -180,54 +191,55 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Initialise les wii remotes
-    /* private void InitWiimotes()
-    {
-        // Trouve les wiimotes connectées
-        WiimoteManager.FindWiimotes();
+    private void readPlayerRemoteData()
+    {   
+        // Variable pour contenir le data de la remote
+        int data;
 
-        // Parcoure toutes les wii remotes
-        foreach (Wiimote wiiRemote in WiimoteManager.Wiimotes)
+        // Tant qu'il y a des données à lire
+        do
         {
-            Debug.Log("Wii Remote trouvée !");
+            // Lire le data
+            data = playerRemote.ReadWiimoteData();
 
-            // Affectation à notre variable
-            remote = wiiRemote;
+            // Aller chercher les données de l'accélération
+            float[] accel = playerRemote.Accel.GetCalibratedAccelData();
 
-            // Initialisation de la caméra (peut-être à enlever, dépend si on utilise la caméra ou non)
-            // Vérifier si l'accélération dépend de ça
-            remote.SetupIRCamera(IRDataType.EXTENDED);
+            // Prendre le résultat de l'accélération
+            float accel_result = accel[0];
 
-        }
-    }*/
+            // Si l'accélération est plus haut que 2 et qu'au moins une seconde s'est écoulée
+            if (accel_result > 2 && Time.time >= timestamp)
+            {
+                // On lance le pouvoir
+                ThrowPower();
 
-    // Clean les wii remotes de l'application
-    // À appeler à la fin du jeu
-    /* void FinishedWithWiimotes()
-    {
-        // Parcoure toutes les wii remotes
-        foreach (Wiimote remote in WiimoteManager.Wiimotes)
-        {
-            WiimoteManager.Cleanup(remote);
-        }
-    }*/
+                // Update du temps
+                timestamp = Time.time + timeBetweenShots;
+            }
+
+        } while (data > 0);
+    }
 
     // Lance le pouvoir du joueur
-    /* private void ThrowPower () {
+    private void ThrowPower () {
+        playerAnim.SetTrigger("spellCast");
+        canMove = false;
+        rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+
         // On instantie le pouvoir
         GameObject powerMove = Instantiate(power) as GameObject;
 
         // On le place à la position du joueur
-        // Placer à la caméra en ce moment ??
-        powerMove.transform.position = transform.position + Camera.main.transform.forward * 2;
+        powerMove.transform.position = new Vector3(transform.position.x, transform.position.y+0.5f, transform.position.z+4.0f);
 
         // On va chercher le rigidbody du pouvoir
-        Rigidbody rb = powerMove.GetComponent<Rigidbody>();
+        Rigidbody rbPower = powerMove.GetComponent<Rigidbody>();
 
         // Le pouvoir est projeté vers l'avant
-        rb.velocity = Camera.main.transform.forward * 40;
+        rbPower.velocity = transform.forward * 40;
 
         // On détruit le pouvoir après une seconde
         Destroy(powerMove, 1f);
-    }*/
+    }
 }

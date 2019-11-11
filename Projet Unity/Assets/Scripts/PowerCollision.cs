@@ -8,7 +8,6 @@ public class PowerCollision : MonoBehaviour
     {
         if(colInfo.collider.tag == "obstacleSpecial")
         {
-            Debug.Log("Obstacle spessiul");
             Destroy(colInfo.gameObject);
             Destroy(this.gameObject);
         }

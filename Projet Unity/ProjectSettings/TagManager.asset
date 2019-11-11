@@ -11,6 +11,7 @@ TagManager:
   - obstacleSpecial
   - player2
   - floor
+  - missingTile
   layers:
   - Default
   - TransparentFX

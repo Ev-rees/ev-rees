@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class TileManager : MonoBehaviour
 {
 
-    public GameObject tilePrefab;
+    public GameObject[] tilePrefabs;
     public GameObject player;
     public float spawnZ = -15.0f;
     public float tileLength = 15.0f;
@@ -27,29 +27,40 @@ public class TileManager : MonoBehaviour
     private void Update()
     {
        if (player.transform.position.z - safeZone > (spawnZ - amountTilesOnScreen * tileLength))
-        {
+       {
             SpawnTile();
             DeleteTile();
-        }
+       }
     }
 
     private void SpawnTile()
     {
-        GameObject go;
-        go = Instantiate(tilePrefab) as GameObject;
-        go.transform.SetParent(transform);
+        GameObject go = null;
+
+        float num = Random.Range(0, 100.0f);
+
+        Debug.Log(num);
+
+        if (num >= 0 && num <= 85.0f)
+        {
+            go = Instantiate(tilePrefabs[0]) as GameObject;
+        }
+
+        if (num > 85.0f && num <= 100.0f && activeTiles.Count > 4)
+        {
+            go = Instantiate(tilePrefabs[1]) as GameObject;
+        }
 
         go.transform.position =  new Vector3(player.transform.position.x, go.transform.position.y, spawnZ);
         
-        //Vector3.forward * spawnZ;
         spawnZ += tileLength;
 
         activeTiles.Add(go);
     }
 
-    private void DeleteTile()
+    private void DeleteTile(int index = 0)
     {
-        Destroy(activeTiles[0]);
-        activeTiles.RemoveAt(0);
+        Destroy(activeTiles[index]);
+        activeTiles.RemoveAt(index);
     }
 }
