@@ -35,22 +35,20 @@ public class TileManager : MonoBehaviour
 
     private void SpawnTile()
     {
-        GameObject go = null;
+        GameObject go;
+        GameObject whichTile = tilePrefabs[0];
 
         float num = Random.Range(0, 100.0f);
 
-        Debug.Log(num);
-
-        if (num >= 0 && num <= 85.0f)
+        if (num >= 0 && num <= 15 && activeTiles.Count >= 8)
         {
-            go = Instantiate(tilePrefabs[0]) as GameObject;
+            Debug.Log(num);
+            Debug.Log(activeTiles.Count);
+
+            whichTile = tilePrefabs[1];
         }
 
-        if (num > 85.0f && num <= 100.0f && activeTiles.Count > 4)
-        {
-            go = Instantiate(tilePrefabs[1]) as GameObject;
-        }
-
+        go = Instantiate(whichTile) as GameObject;
         go.transform.position =  new Vector3(player.transform.position.x, go.transform.position.y, spawnZ);
         
         spawnZ += tileLength;

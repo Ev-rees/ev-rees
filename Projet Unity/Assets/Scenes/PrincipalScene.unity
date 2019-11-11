@@ -5752,8 +5752,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f52f55006fe3e9489b189690760cbe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 4267810614728770457, guid: 791ea67977d5b244f87818cc767d39d0,
-    type: 3}
+  tilePrefabs:
+  - {fileID: 4267810614728770457, guid: 791ea67977d5b244f87818cc767d39d0, type: 3}
+  - {fileID: 4267810614728770457, guid: 09d8ec3688aafba4ea4722d998b77f99, type: 3}
   player: {fileID: 1238218560}
   spawnZ: -15
   tileLength: 15
@@ -5822,8 +5823,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f52f55006fe3e9489b189690760cbe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 4267810614728770457, guid: d11df418ce308a149ab42880457baf84,
-    type: 3}
+  tilePrefabs:
+  - {fileID: 4267810614728770457, guid: d11df418ce308a149ab42880457baf84, type: 3}
+  - {fileID: 4267810614728770457, guid: 09d8ec3688aafba4ea4722d998b77f99, type: 3}
   player: {fileID: 1114865119}
   spawnZ: -15
   tileLength: 15
@@ -5885,7 +5887,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114865119}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3d06777b1e04933409a5098642a05fa8, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -5991,7 +5993,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238218560}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3d06777b1e04933409a5098642a05fa8, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
